@@ -1,24 +1,18 @@
 package locationAPI.example.model;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+//@JsonFilter("monFiltreDynamique")
 public class Client {
 	private String id;
 	private String firstName;
 	private String lastName;
+	private String dateOfBirth;
+	private String drivingLicenseNumber;
+//	@JsonIgnore
+	private String animal;
 
-//	public String toJson() {
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		try {
-//			return objectMapper.writeValueAsString(this);
-//		} catch (Exception e) {
-//			// Gérer l'exception ici si nécessaire
-//			return null;
-//		}
-//	}
 	public String getId() {
 		return id;
 	}
@@ -59,8 +53,14 @@ public class Client {
 		this.drivingLicenseNumber = drivingLicenseNumber;
 	}
 
-	private String dateOfBirth;
-	private String drivingLicenseNumber;
+	public String getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(String animal) {
+		this.animal = animal;
+	}
+
 
 	@Override
 	public String toString() {

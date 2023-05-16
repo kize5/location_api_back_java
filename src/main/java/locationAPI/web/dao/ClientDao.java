@@ -8,5 +8,7 @@ import java.util.List;
 public interface ClientDao {
 	List<Client> findAll();
 	Client findById(String id);
-	Client save(Client product);
+	Client save(Client client);
+	Client remove(String id);
+	Client update(Client client);
 }

@@ -23,6 +23,7 @@ public class ClientDaolmpl implements ClientDao {
 			client.setLastName(faker.name().lastName());
 			client.setDateOfBirth(faker.date().birthday().toString());
 			client.setDrivingLicenseNumber(faker.regexify("[A-Z0-9]{9}"));
+			client.setAnimal(faker.animal().name());
 //			clients.add(new Client("1", "name", "namee", "55555", "5845445"));
 			clients.add(client);
 		}
@@ -45,7 +46,36 @@ public class ClientDaolmpl implements ClientDao {
 
 	@Override
 	public Client save(Client client) {
+		client.setId(UUID.randomUUID().toString());
 		clients.add(client);
 	return client;
+	}
+
+	public Client remove(String id) {
+		Client clientToRemove = null;
+		for (Client client : clients) {
+			if (client.getId().equals(id)) {
+				clientToRemove = client;
+				break;
+			}
+		}
+		if (clientToRemove != null) {
+			clients.remove(clientToRemove);
+		}
+		return clientToRemove;
+	}
+
+	public Client update(Client updatedClient) {
+		for (Client client : clients) {
+			if (client.getId().equals(updatedClient.getId())) {
+				client.setFirstName(updatedClient.getFirstName());
+				client.setLastName(updatedClient.getLastName());
+				client.setDateOfBirth(updatedClient.getDateOfBirth());
+				client.setDrivingLicenseNumber(updatedClient.getDrivingLicenseNumber());
+				client.setAnimal(updatedClient.getAnimal());
+				return client;
+			}
+		}
+		return null;
 	}
 }
