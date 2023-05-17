@@ -18,11 +18,11 @@ public class LicenseChecker {
 
 		// Vérifier si la réponse de l'API est vraie ou fausse
 		boolean isValid = Boolean.TRUE.equals(response.getBody());
-		if (isValid) {
-			System.out.println("La licence avec l'ID " + license + " est valide.");
-		} else {
-			System.out.println("La licence avec l'ID " + license + " n'est pas valide.");
-		}
+//		if (isValid) {
+//			System.out.println("La licence avec l'ID " + license + " est valide.");
+//		} else {
+//			System.out.println("La licence avec l'ID " + license + " n'est pas valide.");
+//		}
 		return isValid;
 	}
 }

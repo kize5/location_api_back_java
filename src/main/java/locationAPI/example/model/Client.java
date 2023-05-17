@@ -3,14 +3,19 @@ package locationAPI.example.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 //@JsonFilter("monFiltreDynamique")
+@Entity
 public class Client {
+	@Id
 	private String id;
 	private String firstName;
 	private String lastName;
 	private String dateOfBirth;
 	private String drivingLicenseNumber;
-
 	private boolean licenseValidity;
 //	@JsonIgnore
 	private String animal;
