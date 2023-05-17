@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import locationAPI.example.model.Client;
+import locationAPI.web.ClientNotFoundException;
 import locationAPI.web.dao.ClientDao;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +60,12 @@ public class ClientControler {
 	}
 
 	@PutMapping(value = "/clients")
-	public Client updateClient(@RequestBody Client client) {
+	public Client updateClient(@RequestBody Client client) throws ClientNotFoundException {
 		return clientDao.update(client);
+	}
+	@ExceptionHandler(ClientNotFoundException.class)
+	public ResponseEntity<Object> handleClientNotFoundException(ClientNotFoundException ex) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body("{\"message\":\"" + ex.getMessage() + "\"}");
 	}
 }

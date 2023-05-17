@@ -10,6 +10,8 @@ public class Client {
 	private String lastName;
 	private String dateOfBirth;
 	private String drivingLicenseNumber;
+
+	private boolean licenseValidity;
 //	@JsonIgnore
 	private String animal;
 
@@ -60,6 +62,15 @@ public class Client {
 	public void setAnimal(String animal) {
 		this.animal = animal;
 	}
+
+	public boolean isLicenseValidity() {
+		return licenseValidity;
+	}
+
+	public void setLicenseValidity(boolean licenseValidity) {
+		this.licenseValidity = licenseValidity;
+	}
+
 
 
 	@Override

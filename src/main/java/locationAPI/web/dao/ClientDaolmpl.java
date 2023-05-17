@@ -3,8 +3,9 @@ package locationAPI.web.dao;
 
 import com.github.javafaker.Faker;
 import locationAPI.example.model.Client;
+import locationAPI.web.ClientNotFoundException;
+import locationAPI.web.controller.LicenseChecker;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class ClientDaolmpl implements ClientDao {
 
 	public static List<Client> clients = new ArrayList<>();
+	static LicenseChecker check = new LicenseChecker();
 
 	static {
 		Faker faker = new Faker();
@@ -24,6 +26,7 @@ public class ClientDaolmpl implements ClientDao {
 			client.setDateOfBirth(faker.date().birthday().toString());
 			client.setDrivingLicenseNumber(faker.regexify("[A-Z0-9]{9}"));
 			client.setAnimal(faker.animal().name());
+			client.setLicenseValidity(check.checker(client.getDrivingLicenseNumber()));
 //			clients.add(new Client("1", "name", "namee", "55555", "5845445"));
 			clients.add(client);
 		}
@@ -47,6 +50,7 @@ public class ClientDaolmpl implements ClientDao {
 	@Override
 	public Client save(Client client) {
 		client.setId(UUID.randomUUID().toString());
+		client.setLicenseValidity(check.checker(client.getDrivingLicenseNumber()));
 		clients.add(client);
 	return client;
 	}
@@ -65,17 +69,20 @@ public class ClientDaolmpl implements ClientDao {
 		return clientToRemove;
 	}
 
-	public Client update(Client updatedClient) {
+	public Client update(Client updatedClient) throws ClientNotFoundException {
 		for (Client client : clients) {
 			if (client.getId().equals(updatedClient.getId())) {
 				client.setFirstName(updatedClient.getFirstName());
 				client.setLastName(updatedClient.getLastName());
 				client.setDateOfBirth(updatedClient.getDateOfBirth());
 				client.setDrivingLicenseNumber(updatedClient.getDrivingLicenseNumber());
+				client.setLicenseValidity(check.checker(client.getDrivingLicenseNumber()));
 				client.setAnimal(updatedClient.getAnimal());
 				return client;
 			}
 		}
-		return null;
+		throw new ClientNotFoundException("Client not found with ID: " + updatedClient.getId());
 	}
 }
+
+
